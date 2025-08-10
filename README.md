@@ -34,6 +34,9 @@ Quickshell version: I don't know I got the master branch one
 - Systemtray
 - Rofi Style App Launcher (which updates desktop entries on runtime)  
 
+## Known issues
+MPRIS progress bar not updating accurately sometimes
+
 ## Screenshots
 <img width="2560" height="1440" alt="20250810_22h51m09s_grim" src="https://github.com/user-attachments/assets/c8da9ef5-adc8-4dd8-ba21-36165bbe4d32" />
 <img width="2560" height="1440" alt="20250810_23h16m54s_grim" src="https://github.com/user-attachments/assets/b9512b28-c3b2-4d67-9da0-ef8a2402de34" />
