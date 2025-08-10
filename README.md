@@ -4,7 +4,7 @@ I will try to make my code more readable for human beings, feel free to take my 
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
 ## Design philosophy
-Waybar on steroids  
+Waybar on steroids, theme agnostic  
 
 ## System used for making this terrible Quickshell config:
 Distro: Arch Linux  
