@@ -21,6 +21,7 @@ Quickshell version: I don't know I got the master branch one
 - Wayfire (Of course)  
 - PyWayfire (Wayfire's IPC)
 - gtk-launch (Opening desktop entries)
+- lm-sensors (Getting CPU temperature)
 
 ## Features
 - MPRIS bar with progress and Cava window showing up when the bar is clicked on  
