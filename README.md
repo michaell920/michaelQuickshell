@@ -15,17 +15,20 @@ Wayland compositor: Wayfire
 Quickshell version: I don't know I got the master branch one  
 
 ## You need these dependencies in order to work property:
+### In Arch's repository
 - cava  
 - NetworkManager  
 - playerctl  
 - qt6-5compat (For graphical effects)  
 - ddcutil (Setting screen brightness)  
-- python  
-- wayfire (Of course)  
-- python-wayfire (Wayfire's IPC)
+- python
 - gtk-launch (Opening desktop entries)
 - lm-sensors (Getting CPU temperature)
 - upower (setting power modes)  
+
+### In AUR
+- wayfire (Of course)  
+- python-wayfire (Wayfire's IPC)
 
 ## Features
 - MPRIS bar with progress and Cava window showing up when the bar is clicked on  
