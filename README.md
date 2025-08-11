@@ -4,7 +4,10 @@ I will try to make my code more readable for human beings, feel free to take my 
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
 ## Design philosophy
-Waybar on steroids, theme agnostic  
+Waybar on steroids, theme agnostic (color is based on your qt theme)  
+
+## Installation
+Copy the "quickshell" folder to your ~/.config folder  
 
 ## System used for making this terrible Quickshell config:
 Distro: Arch Linux  
@@ -12,17 +15,17 @@ Wayland compositor: Wayfire
 Quickshell version: I don't know I got the master branch one  
 
 ## You need these dependencies in order to work property:
-- Cava  
+- cava  
 - NetworkManager  
-- Playerctl  
-- Qt6-5Compat (For graphical effects)  
-- DDCUtil (Setting screen brightness)  
-- Python  
-- Wayfire (Of course)  
-- PyWayfire (Wayfire's IPC)
+- playerctl  
+- qt6-5compat (For graphical effects)  
+- ddcutil (Setting screen brightness)  
+- python  
+- wayfire (Of course)  
+- python-wayfire (Wayfire's IPC)
 - gtk-launch (Opening desktop entries)
 - lm-sensors (Getting CPU temperature)
-- UPower (setting power modes)  
+- upower (setting power modes)  
 
 ## Features
 - MPRIS bar with progress and Cava window showing up when the bar is clicked on  
