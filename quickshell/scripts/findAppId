@@ -1,10 +1,10 @@
 #!/bin/sh
 
-# I know I am a terrible coder could have used better things for outputting
+default="/usr/share/applications"
+usrDir="${HOME}/.local/share/applications"
 
-folder="/usr/share/applications"
-
-for app in $folder/*.desktop; do 
-    echo "${app:24:-8},"$(cat $app | awk -F= '/^Name=/ { if (titleonce++ == 0) TITLE=$2 } /^Exec=/ { if (execonce++ == 0) EXEC=$2 } /^Icon=/ {  if (icononce++ == 0) ICON = $2 } /^NoDisplay=/ { HIDDEN = $2 } END { print TITLE "," ICON "," HIDDEN}')
+for app in $(ls $default/*.desktop $usrDir/*.desktop 2> /dev/null); do 
+    VAL=$(basename $app)
+    echo "${VAL:0:-8},"$(cat $app | awk -F= '/^Name=/ { if (titleonce++ == 0) TITLE=$2 } /^Exec=/ { if (execonce++ == 0) EXEC=$2 } /^Icon=/ {  if (icononce++ == 0) ICON = $2 } /^NoDisplay=/ { HIDDEN = $2 } END { print TITLE "," ICON "," HIDDEN}')
 done
     

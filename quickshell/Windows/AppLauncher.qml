@@ -58,6 +58,8 @@ Scope {
 
 
                     function update() {
+                        var visibleArr = []
+
                         if (searchBar.text != "") {
                             const regex = new RegExp(searchBar.text.toLowerCase())
 
@@ -74,7 +76,7 @@ Scope {
                                     }
                                 } else {
                                     if (entryTitle.match(regex) || entryName.match(regex)) {
-                                        item.inResults = true
+                                        visibleArr.push(item)
                                     }
                                 }
                             }
@@ -82,10 +84,23 @@ Scope {
                             resultEntries.removeGroups(0, resultEntries.count - 1)
                             
                             for (var i = 0; i < items.count - 1; i++) {
-                                items.get(i).inResults = true
+                                visibleArr.push(items.get(i))
                             }
                         }
                         
+                        // Sort
+                        visibleArr.sort(function(a, b) {
+                            return a.model.title.localeCompare(b.model.title)
+                        })
+
+                        // Sort again in the result group
+                        for (var i = 0; i < visibleArr.length - 1; i++) {
+                            var item = visibleArr[i]
+                            item.inResults = true
+                            if (item.resultsIndex !== i) {
+                                resultEntries.move(item.resultsIndex, i, 1);
+                            }
+                        }
                     }
                     
                     groups: DelegateModelGroup {

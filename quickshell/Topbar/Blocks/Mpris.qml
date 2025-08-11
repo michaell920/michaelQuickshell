@@ -195,10 +195,8 @@ RowLayout {
                 }
             }
 
-            Timer {
+            FrameAnimation {
                 running: modelData.playbackState == MprisPlaybackState.Playing
-                interval: 1000
-                repeat: true
 
                 onTriggered: () => {
                     var percentage = (modelData.position / modelData.length)
@@ -212,9 +210,6 @@ RowLayout {
                         
                 stdout: SplitParser {
                     onRead: (data) => {
-                        //data.map((number) => {
-                        //   cavaVal[cavaVal.length] = number
-                        //})
                         const cavaData = data.slice(2, -1).split(/, /)
                         cavaLength = cavaData.length
                         cavaVal = cavaData
