@@ -3,9 +3,6 @@ Not meant to be used by anyone but myself, I don't read commits
 I will try to make my code more readable for human beings, feel free to take my stuffs for your configuration  
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
-## Broken stuff
-- App Launcher (list model painful)
-
 ## Design philosophy
 Waybar on steroids, theme agnostic (color is based on your qt theme)  
 
@@ -45,7 +42,7 @@ Quickshell version: I don't know I got the master branch one
 
 ## Known issues
 MPRIS progress bar not updating accurately sometimes
-App launcher sucked, it doesn't work properly
+App launcher sucked, it loads slowly
 
 ## Screenshots
 <img width="2560" height="1440" alt="20250810_22h51m09s_grim" src="https://github.com/user-attachments/assets/c8da9ef5-adc8-4dd8-ba21-36165bbe4d32" />
