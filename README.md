@@ -39,10 +39,10 @@ Quickshell version: I don't know I got the master branch one
 - Power mode indicator (click to change modes)  
 - External desktop monitor bar (scroll to control brightness)  
 - Systemtray
-- Rofi Style App Launcher (which updates desktop entries on runtime)  
 
 ## Known issues
 MPRIS progress bar not updating accurately sometimes
+App launcher sucked, it doesn't work properly
 
 ## Screenshots
 <img width="2560" height="1440" alt="20250810_22h51m09s_grim" src="https://github.com/user-attachments/assets/c8da9ef5-adc8-4dd8-ba21-36165bbe4d32" />
