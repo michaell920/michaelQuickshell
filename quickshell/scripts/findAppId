@@ -5,6 +5,6 @@ usrDir="${HOME}/.local/share/applications"
 
 for app in $(ls $default/*.desktop $usrDir/*.desktop 2> /dev/null); do 
     VAL=$(basename $app)
-    echo "${VAL:0:-8},"$(cat $app | awk -F= '/^Name=/ { if (titleonce++ == 0) TITLE=$2 } /^Exec=/ { if (execonce++ == 0) EXEC=$2 } /^Icon=/ {  if (icononce++ == 0) ICON = $2 } /^NoDisplay=/ { HIDDEN = $2 } END { print TITLE "," ICON "," HIDDEN}')
+    echo "${VAL:0:-8},"$(cat $app | awk -F= '/^Name=/ { if (titleonce++ == 0) TITLE=$2 } /^Exec=/ { if (execonce++ == 0) EXEC=$2 } /^Icon=/ {  if (icononce++ == 0) ICON = $2 } /^NoDisplay=/ { HIDDEN = $2 } END { print TITLE "," ICON "," HIDDEN ","}')$(realpath $app)
 done
     

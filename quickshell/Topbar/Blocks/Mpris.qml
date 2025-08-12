@@ -13,6 +13,8 @@ import Qt5Compat.GraphicalEffects
 // Mpris is not updating accurately sometimes
 
 RowLayout {
+    id: layout
+
     property int progressHeight: 2
     property int cavaHeight: 200
     property int gap: 10
@@ -104,17 +106,21 @@ RowLayout {
             PopupWindow {
                 id: cava
                 
-                implicitWidth: mprisBox.width
-                implicitHeight: cavaHeight + gap
+                // Set to maxWidth by default
+                implicitWidth: maxWidth
+                implicitHeight: cavaHeight
                 
                 anchor {
                     window: mprisBox.QsWindow.window
                     adjustment: PopupAdjustment.Flip
+                    
                 }
-
+                
                 anchor.onAnchoring: {
                     const window = mprisBox.QsWindow.window
-                    const widgetRect = window.contentItem.mapFromItem(mprisBox, 0, mprisBox.height + gap, mprisBox.width, mprisBox.height)
+
+                    // (mprisBox.width - this.width) / 2 equals center!
+                    const widgetRect = window.contentItem.mapFromItem(mprisBox, (mprisBox.width - this.width) / 2, mprisBox.height + gap, mprisBox.width, mprisBox.height)
     
                     anchor.rect = widgetRect
                 }

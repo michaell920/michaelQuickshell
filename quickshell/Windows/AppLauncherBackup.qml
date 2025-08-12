@@ -13,7 +13,6 @@ import Qt5Compat.GraphicalEffects
 
 
 // Bigger brain at https://martin.rpdev.net/2019/01/15/using-delegatemodel-in-qml-for-sorting-and-filtering.html
-// Known issue: very slow launcher, takes 1-2 seconds to load
 
 Scope {
     property int entryHeight: 30
@@ -34,7 +33,6 @@ Scope {
 
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
-            visible: false
 
             Rectangle {
                 id: bg
@@ -54,7 +52,6 @@ Scope {
                     }
                 }
                 
-                
                 DelegateModel {
                     id: entriesModel
                     model: entriesList
@@ -72,7 +69,7 @@ Scope {
                                 
                                 var entryName = entry.name.toLowerCase()
                                 var entryTitle = entry.title.toLowerCase()
-                                
+
                                 // If the item is in the "results" group
                                 if (item.inResults) {
                                     // If does not match the title nor the name
@@ -89,7 +86,7 @@ Scope {
                             }
                         } else {
                             // Remove all result entries
-                            resultEntries.removeGroups(0, resultEntries.count)
+                            resultEntries.removeGroups(0, resultEntries.count - 1)
                             
                             // Add all available entries to the visibleArr
                             for (var i = 0; i < items.count - 1; i++) {
@@ -105,15 +102,25 @@ Scope {
                         // Sort again in the result group
                         for (var i = 0; i < visibleArr.length - 1; i++) {
                             var item = visibleArr[i]
-
+                            
                             // Make things in visibleArr present in the "results" group
                             item.inResults = true
-
                             if (item.resultsIndex !== i) {
-                                resultEntries.move(item.resultsIndex, i, 1)
+                                resultEntries.move(item.resultsIndex, i, 1);
                             }
                         }
                     }
+                    
+                    groups: DelegateModelGroup {
+                        id: resultEntries
+                        name: "results"
+                        includeByDefault: false
+                    }
+                    
+                    filterOnGroup: "results"
+                    
+                    items.onChanged: update()
+                    
                     
                     delegate: Rectangle {
                         id: entryHolder
@@ -121,10 +128,10 @@ Scope {
                         required property string name
                         required property string title
                         required property string icon
-                        required property string path
-                        required property int entryIndex
 
-
+                        required property int index
+                        
+                        
                         anchors.left: view.contentItem.left
                         anchors.right: view.contentItem.right
 
@@ -159,14 +166,7 @@ Scope {
                             anchors.fill: parent
                             
                             onClicked: {
-                                // Inefficient script, God save us please....
-                                for (var i = 0; i < resultEntries.count - 1; i++) {
-                                    var entry = resultEntries.get(i)
-                                    if (entry.model.path === path) {
-                                        view.currentIndex = i
-                                        break
-                                    }
-                                }
+                                view.currentIndex = index
                             }
                             
                             onDoubleClicked: {
@@ -174,16 +174,6 @@ Scope {
                             }
                         }
                     }
-                        
-                    
-                    groups: DelegateModelGroup {
-                        id: resultEntries
-                        name: "results"
-                        includeByDefault: false
-                    }
-                    
-                    filterOnGroup: "results"
-                    
                 }
 
                 ListModel {
@@ -236,9 +226,6 @@ Scope {
                                     launchApplication()
                                     break
                                 }
-                                case Qt.Key_Escape: {
-                                    launcherLoader.active = false
-                                }
                                 default: {
                                     break
                                 }
@@ -262,37 +249,33 @@ Scope {
                         
                         highlight: Rectangle { color: palette.active.accent }
                         highlightMoveDuration: 0
-                        
+                    }
+
                     
+                    Component.onCompleted: {
+                        getDesktopEntries.running = true
                     }
                 }
-                
+
             }
 
             Process {
                 id: getDesktopEntries 
-                running: true
+                running: false
                 command: [Quickshell.shellDir + "/scripts/findAppId"]
                 
                 stdout: SplitParser {
                     onRead: data => {
                         var entry = data.split(",") 
 
-                        if (entry[3] !== "true") {
+                        if (entry[3] != "true") {
                             entriesList.append({ 
                                 "name": entry[0], 
                                 "title": entry[1],
                                 "icon": entry[2].split(" ")[0],
-                                "entryIndex": entriesList.count + 1,
-                                "path": entry[4]
                             })
                         }
                     }
-                }
-                
-                onExited: {
-                    entriesModel.update()
-                    root.visible = true
                 }
             }
             

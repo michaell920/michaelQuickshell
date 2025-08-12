@@ -29,9 +29,9 @@ Scope {
             }
             
             margins {
-                top: 10
-                left: 10
-                right: 10
+                top: windowGap
+                left: windowGap
+                right: windowGap
                 bottom: 20
             }
 
@@ -81,6 +81,7 @@ Scope {
                     Blocks.PowerPlan {}
                     Blocks.ExternalMonitor {}
                     Blocks.Systray {}
+                    Blocks.NotificationToggle {}
                 }
             }
         }
