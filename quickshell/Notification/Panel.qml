@@ -190,7 +190,7 @@ Scope {
                             onClicked: {
                                 for (var i = 0; i < notificationsList.count; i++) {
                                     var entry = notificationsList.get(i).notif
-                                    entry.dismiss()
+                                    entry?.dismiss()
                                 }
                                 notificationsList.clear()
                             }

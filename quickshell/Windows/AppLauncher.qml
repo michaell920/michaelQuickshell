@@ -16,9 +16,96 @@ import Qt5Compat.GraphicalEffects
 // Known issue: very slow launcher, takes 1-2 seconds to load
 
 Scope {
+    id: root 
+
     property int entryHeight: 30
     property int searchBarHeight: 30
     
+
+    ListModel {
+        id: entriesList
+    }
+
+    DelegateModel {
+        id: entriesModel
+        model: entriesList
+        
+        property var visibleArr: []
+
+        function filter(text) {
+            visibleArr = []
+
+            const regex = new RegExp(text.toLowerCase())
+
+            for (var i = 0; i < items.count - 1; i++) {
+                var item = items.get(i)
+                var entry = item.model
+                
+                var entryName = entry.name.toLowerCase()
+                var entryTitle = entry.title.toLowerCase()
+                
+                // If the item is in the "results" group
+                if (item.inResults) {
+                    // If does not match the title nor the name
+                    if (!entryTitle.match(regex) && !entryName.match(regex)) {
+                        item.inResults = false
+                    } else {
+                        visibleArr.push(item)
+                    }
+                } else {
+                    // If the item is not in the "results" group and matches the regex
+                    if (entryTitle.match(regex) || entryName.match(regex)) {
+                        // Add it to the visibleArr
+                        visibleArr.push(item)
+                    }
+                }
+            }
+
+            update()
+        }
+        
+        function fill() {
+            visibleArr = []
+
+            // Remove all result entries
+            resultEntries.removeGroups(0, resultEntries.count)
+                
+            // Add all available entries to the visibleArr
+            for (var i = 0; i < items.count - 1; i++) {
+                visibleArr.push(items.get(i))
+            }
+
+            update()
+        }
+
+        function update() {
+            // Sort
+            visibleArr.sort(function(a, b) {
+                return a.model.title.localeCompare(b.model.title)
+            })
+            
+            // Sort again in the result group
+            for (var i = 0; i < visibleArr.length; i++) {
+                var item = visibleArr[i]
+
+                // Make things in visibleArr present in the "results" group
+                item.inResults = true
+
+                if (item.resultsIndex !== i) {
+                    resultEntries.move(item.resultsIndex, i, 1)
+                }
+            }
+        }
+        
+        groups: DelegateModelGroup {
+            id: resultEntries
+            name: "results"
+            includeByDefault: false
+        }
+        
+        filterOnGroup: "results"
+        
+    }
 
     LazyLoader {
         id: launcherLoader
@@ -34,7 +121,6 @@ Scope {
 
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
 
-            visible: false
 
             Rectangle {
                 id: bg
@@ -54,142 +140,6 @@ Scope {
                     }
                 }
                 
-                
-                DelegateModel {
-                    id: entriesModel
-                    model: entriesList
-
-                    function update() {
-                        var visibleArr = []
-
-                        // If searchbar text is not empty
-                        if (searchBar.text != "") {
-                            const regex = new RegExp(searchBar.text.toLowerCase())
-
-                            for (var i = 0; i < items.count - 1; i++) {
-                                var item = items.get(i)
-                                var entry = item.model
-                                
-                                var entryName = entry.name.toLowerCase()
-                                var entryTitle = entry.title.toLowerCase()
-                                
-                                // If the item is in the "results" group
-                                if (item.inResults) {
-                                    // If does not match the title nor the name
-                                    if (!entryTitle.match(regex) && !entryName.match(regex)) {
-                                        item.inResults = false
-                                    }
-                                } else {
-                                    // If the item is not in the "results" group and matches the regex
-                                    if (entryTitle.match(regex) || entryName.match(regex)) {
-                                        // Add it to the visibleArr
-                                        visibleArr.push(item)
-                                    }
-                                }
-                            }
-                        } else {
-                            // Remove all result entries
-                            resultEntries.removeGroups(0, resultEntries.count)
-                            
-                            // Add all available entries to the visibleArr
-                            for (var i = 0; i < items.count - 1; i++) {
-                                visibleArr.push(items.get(i))
-                            }
-                        }
-                        
-                        // Sort
-                        visibleArr.sort(function(a, b) {
-                            return a.model.title.localeCompare(b.model.title)
-                        })
-
-                        // Sort again in the result group
-                        for (var i = 0; i < visibleArr.length - 1; i++) {
-                            var item = visibleArr[i]
-
-                            // Make things in visibleArr present in the "results" group
-                            item.inResults = true
-
-                            if (item.resultsIndex !== i) {
-                                resultEntries.move(item.resultsIndex, i, 1)
-                            }
-                        }
-                    }
-                    
-                    delegate: Rectangle {
-                        id: entryHolder
-
-                        required property string name
-                        required property string title
-                        required property string icon
-                        required property string path
-                        required property int entryIndex
-
-
-                        anchors.left: view.contentItem.left
-                        anchors.right: view.contentItem.right
-
-                        implicitHeight: entryHeight
-                        
-                        color: "Transparent"
-                        
-                        
-                        RowLayout {
-                            id: entryLayout
-                            
-                            anchors.left: parent.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.leftMargin: textPadding
-
-                            IconImage {
-                                implicitSize: 20
-                                source: Quickshell.iconPath(icon)
-                            }
-
-                            Text {
-                                text: title
-                                
-                                color: palette.active.text
-
-                                style: entryHolder.ListView.isCurrentItem ? Text.Outline: Text.Normal
-                                styleColor: palette.active.shadow
-                            }
-                        }
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            
-                            onClicked: {
-                                // Inefficient script, God save us please....
-                                for (var i = 0; i < resultEntries.count - 1; i++) {
-                                    var entry = resultEntries.get(i)
-                                    if (entry.model.path === path) {
-                                        view.currentIndex = i
-                                        break
-                                    }
-                                }
-                            }
-                            
-                            onDoubleClicked: {
-                                launchApplication()
-                            }
-                        }
-                    }
-                        
-                    
-                    groups: DelegateModelGroup {
-                        id: resultEntries
-                        name: "results"
-                        includeByDefault: false
-                    }
-                    
-                    filterOnGroup: "results"
-                    
-                }
-
-                ListModel {
-                    id: entriesList
-                }
-
                 ColumnLayout {
                     anchors.fill: parent
 
@@ -246,7 +196,12 @@ Scope {
                         }
                         
                         Keys.onReleased: event => {
-                            entriesModel.update()
+                            if (searchBar.text.trim().length != 0) {
+                                entriesModel.filter(searchBar.text.trim())
+                            } else {
+                                entriesModel.fill()
+                            }
+
                         }
                     }
 
@@ -263,37 +218,68 @@ Scope {
                         highlight: Rectangle { color: palette.active.accent }
                         highlightMoveDuration: 0
                         
-                    
-                    }
-                }
-                
-            }
 
-            Process {
-                id: getDesktopEntries 
-                running: true
-                command: [Quickshell.shellDir + "/scripts/findAppId"]
-                
-                stdout: SplitParser {
-                    onRead: data => {
-                        var entry = data.split(",") 
+                        delegate: Rectangle {
+                            id: entryHolder
 
-                        if (entry[3] !== "true") {
-                            entriesList.append({ 
-                                "name": entry[0], 
-                                "title": entry[1],
-                                "icon": entry[2].split(" ")[0],
-                                "entryIndex": entriesList.count + 1,
-                                "path": entry[4]
-                            })
+                            required property string name
+                            required property string title
+                            required property string icon
+                            required property string path
+
+
+                            anchors.left: view.contentItem.left
+                            anchors.right: view.contentItem.right
+
+                            implicitHeight: entryHeight
+                            
+                            color: "Transparent"
+                            
+                            
+                            RowLayout {
+                                id: entryLayout
+                                
+                                anchors.left: parent.left
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.leftMargin: textPadding
+
+                                IconImage {
+                                    implicitSize: 20
+                                    source: Quickshell.iconPath(icon)
+                                }
+
+                                Text {
+                                    text: title
+                                    
+                                    color: palette.active.text
+
+                                    style: entryHolder.ListView.isCurrentItem ? Text.Outline: Text.Normal
+                                    styleColor: palette.active.shadow
+                                }
+                            }
+                            
+                            MouseArea {
+                                anchors.fill: parent
+                                
+                                onClicked: {
+                                    // Inefficient script, God save us please....
+                                    for (var i = 0; i < resultEntries.count - 1; i++) {
+                                        var entry = resultEntries.get(i)
+                                        if (entry.model.path === path) {
+                                            view.currentIndex = i
+                                            break
+                                        }
+                                    }
+                                }
+                                
+                                onDoubleClicked: {
+                                    launchApplication()
+                                }
+                            }
                         }
                     }
                 }
                 
-                onExited: {
-                    entriesModel.update()
-                    root.visible = true
-                }
             }
             
             function launchApplication() {
@@ -311,11 +297,46 @@ Scope {
     }
 
 
+    Process {
+        id: getDesktopEntries 
+        running: false
+        command: [Quickshell.shellDir + "/scripts/findAppId"]
+        
+        onStarted: {
+            entriesList.clear()
+        }
+
+        stdout: SplitParser {
+            onRead: data => {
+                var entry = data.split(",") 
+
+                if (entry[3] !== "true") {
+                    entriesList.append({ 
+                        "name": entry[0], 
+                        "title": entry[1],
+                        "icon": entry[2].split(" ")[0],
+                        "path": entry[4]
+                    })
+                }
+            }
+        }
+
+        onExited: {
+            entriesModel.fill()
+        }
+    }
+
+
     IpcHandler {
         target: "launcherLoader"
 
         function toggleLoader() { 
             launcherLoader.active = !launcherLoader.active
+
+            if (launcherLoader.active) {
+                getDesktopEntries.running = false
+                getDesktopEntries.running = true
+            }
         }
     }
 
