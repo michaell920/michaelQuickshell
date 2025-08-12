@@ -4,7 +4,7 @@ I will try to make my code more readable for human beings, feel free to take my 
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
 ## Broken stuff
-- App Launcher
+- App Launcher (list model painful)
 
 ## Design philosophy
 Waybar on steroids, theme agnostic (color is based on your qt theme)  
