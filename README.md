@@ -43,7 +43,7 @@ Quickshell version: I don't know I got the master branch one
 - Notification popups and center
 
 ## Known issues
-MPRIS progress bar not updating accurately sometimes
+MPRIS progress bar not updating accurately sometimes  
 App launcher sucked, it loads slowly
 
 ## Screenshots
