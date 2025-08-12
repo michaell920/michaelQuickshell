@@ -3,6 +3,9 @@ Not meant to be used by anyone but myself, I don't read commits
 I will try to make my code more readable for human beings, feel free to take my stuffs for your configuration  
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
+## Broken stuff
+- App Launcher
+
 ## Design philosophy
 Waybar on steroids, theme agnostic (color is based on your qt theme)  
 
