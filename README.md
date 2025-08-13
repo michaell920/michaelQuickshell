@@ -40,7 +40,8 @@ Quickshell version: I don't know I got the master branch one
 - External desktop monitor bar (scroll to control brightness)  
 - Systemtray
 - Rofi style app launcher with mouse interactions
-- Notification popups and center
+- Notification popups Dunst style
+- Notification centre where you can drag to remove notifications or click to show notifications in full details  
 
 ## Known issues
 MPRIS progress bar not updating accurately sometimes  
