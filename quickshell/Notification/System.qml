@@ -48,7 +48,7 @@ Scope {
                 "notif": notification
             })
             
-            updateCount()
+            notifCount += 1
         }
     }
     

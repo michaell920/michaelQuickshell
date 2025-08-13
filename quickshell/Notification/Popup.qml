@@ -28,6 +28,7 @@ Scope {
         filterOnGroup: "popups"
         
         delegate: Rectangle {
+            id: popup
             required property var index
 
             required property var icon
@@ -43,6 +44,13 @@ Scope {
             
             color: palette.active.base
             
+            
+            NumberAnimation on x {
+                from: popup.width
+                to: 0
+                easing.type: Easing.InOutQuad
+                duration: animateTime
+            }
             
             RowLayout {
                 id: horLayout
@@ -101,7 +109,7 @@ Scope {
                 
                 onClicked: {
                     notif?.dismiss()
-                    notifCount = notificationsList.count - 1
+                    notifCount -= 1
                     notificationsList.remove(index, 1)
                 }
             }
