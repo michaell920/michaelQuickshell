@@ -26,10 +26,15 @@ Scope {
 
     ListModel {
         id: notificationsList
-        
+    }
+    
+    function updateCount() {
+        notifCount = notificationsList.count
     }
     
     NotificationServer {
+        actionsSupported: true
+        actionIconsSupported: true
         imageSupported: true
         
         onNotification: notification => {
@@ -43,6 +48,7 @@ Scope {
                 "notif": notification
             })
             
+            updateCount()
         }
     }
     

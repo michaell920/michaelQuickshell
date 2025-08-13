@@ -17,6 +17,7 @@ Scope {
         
         model: notificationsList
 
+
         delegate: Rectangle {
             required property int index
             required property var modelData
@@ -81,9 +82,6 @@ Scope {
                             implicitSize: 20
                             source: Quickshell.iconPath("window-close", true)
                             
-                            MouseArea {
-                                
-                            }
                         }
                                 
                     }
@@ -193,6 +191,7 @@ Scope {
                                     entry?.dismiss()
                                 }
                                 notificationsList.clear()
+                                updateCount()
                             }
                                 
                             onEntered: {

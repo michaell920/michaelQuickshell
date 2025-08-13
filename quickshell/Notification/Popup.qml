@@ -9,9 +9,6 @@ import QtQml.Models
 
 import Qt5Compat.GraphicalEffects
 
-import "."
-
-
 
 Scope {
 
@@ -55,8 +52,9 @@ Scope {
                     left: parent.left
                     right: parent.right
 
-                    leftMargin: textPadding
                     topMargin: textPadding
+                    leftMargin: textPadding
+                    rightMargin: textPadding
                 }
                 
                 IconImage {
@@ -72,10 +70,15 @@ Scope {
                 
                 ColumnLayout {
                     id: verLayout
+                    
+                    Layout.fillWidth: true
+                    
 
                     Text {
                         text: summary
                         color: palette.active.text
+                        
+                        Layout.fillHeight: true
                         
                         visible: text != ""
                     }
@@ -83,7 +86,11 @@ Scope {
                     Text {
                         text: body
                         color: palette.active.text
+
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
                         
+                        wrapMode: Text.WordWrap
                         visible: text != ""
                     }
                 }
@@ -93,8 +100,9 @@ Scope {
                 anchors.fill: parent
                 
                 onClicked: {
-                    notif.dismiss()
-                    System.notificationsList.remove(index, 1)
+                    notif?.dismiss()
+                    notifCount = notificationsList.count - 1
+                    notificationsList.remove(index, 1)
                 }
             }
             

@@ -37,7 +37,7 @@ Scope {
 
             const regex = new RegExp(text.toLowerCase())
 
-            for (var i = 0; i < items.count - 1; i++) {
+            for (var i = 0; i < items.count; i++) {
                 var item = items.get(i)
                 var entry = item.model
                 

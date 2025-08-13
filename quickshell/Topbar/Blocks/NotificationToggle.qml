@@ -6,8 +6,6 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 
-import qs.Notification as Notification
-
 
 Rectangle {
     color: palette.active.base
@@ -34,7 +32,7 @@ Rectangle {
             }
         }
     }
-
+    
     Process {
         id: togglePanel
         
