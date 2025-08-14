@@ -11,7 +11,7 @@ Rectangle {
     property string cpu: "k10temp-pci-00c3"
     property int pollingRate: 1000
 
-    color: palette.active.base
+    color: palette.active.window
     
     implicitWidth: layout.width + (textPadding * 2)
     Layout.fillHeight: true

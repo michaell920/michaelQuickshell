@@ -28,7 +28,7 @@ Rectangle {
     
     radius: borderRadius
     
-    color: palette.active.base
+    color: palette.active.window
     
     
     RowLayout {

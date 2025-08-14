@@ -80,6 +80,7 @@ Scope {
                     Blocks.Battery {}
                     Blocks.PowerPlan {}
                     Blocks.ExternalMonitor {}
+                    Blocks.Volume {}
                     Blocks.Systray {}
                     Blocks.NotificationToggle {}
                 }

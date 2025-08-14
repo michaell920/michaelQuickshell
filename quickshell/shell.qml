@@ -3,7 +3,7 @@
 import Quickshell
 
 import "Topbar"
-import "Windows"
+import "Windows" as Windows
 import "Notification" as Notification
 
 ShellRoot {
@@ -20,7 +20,9 @@ ShellRoot {
 
     
     Topbar {}
-    AppLauncher {}
-    
+
+    Windows.AppLauncher {}
+    Windows.VolumeMixer {}
+
     Notification.System {}
 }

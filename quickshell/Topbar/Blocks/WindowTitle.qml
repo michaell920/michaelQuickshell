@@ -10,7 +10,7 @@ import QtQuick.Layouts
 Rectangle {
     property var maxWidth: 500
 
-    color: palette.active.base
+    color: palette.active.window
 
     Layout.preferredWidth: layout.width + textPadding
     Layout.fillHeight: true

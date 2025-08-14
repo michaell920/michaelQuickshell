@@ -18,7 +18,7 @@ RowLayout {
         Rectangle {
             required property UPowerDevice modelData
         
-            color: palette.active.base
+            color: palette.active.window
         
             implicitWidth: layout.width + (textPadding * 2)
             Layout.fillHeight: true

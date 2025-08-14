@@ -41,10 +41,6 @@ Scope {
             notification.tracked = true
 
             notificationsList.append({
-                "icon": notification.appIcon,
-                "summary": notification.summary,
-                "body": notification.body,
-                
                 "notif": notification
             })
             

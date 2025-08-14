@@ -8,7 +8,7 @@ import QtQuick.Layouts
 
 
 Rectangle {
-    color: palette.active.base
+    color: palette.active.window
     
     implicitWidth: icon.width + (textPadding * 2)
     Layout.fillHeight: true

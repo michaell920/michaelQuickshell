@@ -15,7 +15,7 @@ Rectangle {
     property var step: ["+", "5"]
     property var baseCmd: ["ddcutil", "setvcp", "10" ,"--bus", "3"]
 
-    color: palette.active.base
+    color: palette.active.window
     
     implicitWidth: layout.width + (textPadding * 2)
     Layout.fillHeight: true
@@ -59,8 +59,9 @@ Rectangle {
                 else
                     step[0] = "-"
 
-                setBrightness.command = baseCmd.concat(step)
-                setBrightness.running = true
+                setBrightness.exec({
+                    command: baseCmd.concat(step)
+                })
             }
         }
     }

@@ -5,7 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 
 Rectangle {
-    color: palette.active.base
+    color: palette.active.window
     
     implicitWidth: clockText.contentWidth + (textPadding * 2)
     Layout.fillHeight: true

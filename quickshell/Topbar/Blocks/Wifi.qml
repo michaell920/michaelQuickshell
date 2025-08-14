@@ -14,7 +14,7 @@ Rectangle {
     property bool connected: false
 
 
-    color: palette.active.base
+    color: palette.active.window
 
     Layout.preferredWidth: layout.width + (textPadding * 2)
     Layout.fillHeight: true

@@ -27,11 +27,13 @@ Scope {
 
             required property int index
             required property var modelData
-                        
-            property string icon: modelData.icon
-            property string body: modelData.body
-            property string summary: modelData.summary
-            property var notif: modelData.notif
+
+            required property var notif
+
+            property string icon: notif.appIcon
+            property string summary: notif.summary
+            property string body: notif.body
+
             
             // Status
             property bool expanded: false
@@ -75,14 +77,14 @@ Scope {
                 
                 onPositionChanged: {
                     if (holder.x !== 0) {
-                        var percentage = holder.x / dragZone.drag.minimumX
+                        var percentage = holder.x / (-holder.width / (1 / dragDeleteRatio))
                         delIndicator.opacity = percentage
-                        delIcon.opacity = percentage
                         delIcon.anchors.rightMargin = holder.x
 
+                        delIcon.visible = (percentage >= 1)
                     } else {
                         delIndicator.opacity = 0
-                        delIcon.opacity = 0
+                        delIcon.visible = false
                     }
                 }
 
@@ -219,10 +221,9 @@ Scope {
 
                 implicitWidth: holder.width * 2
                 
-                color: palette.active.highlight
+                color: "salmon"
                 
                 opacity: 0
-                
             }
 
             IconImage {
@@ -234,7 +235,12 @@ Scope {
                 implicitSize: 20
                 source: Quickshell.iconPath("delete", true)
                 
-                opacity: 0
+                visible: false
+            }
+            
+            Component.onCompleted: {
+                // if the body text is truncated, show the expand button
+                expandBg.visible = bodyText.truncated
             }
         }
     }
@@ -270,7 +276,7 @@ Scope {
         Rectangle {
             anchors.fill: parent   
             
-            color: palette.active.base
+            color: palette.active.window
             radius: borderRadius
             
 

@@ -30,19 +30,19 @@ Scope {
         delegate: Rectangle {
             id: popup
             required property var index
-
-            required property var icon
-            required property var summary
-            required property var body
-            
             required property var notif
+
+            property var icon: notif.appIcon
+            property var summary: notif.summary
+            property var body: notif.body
+            
             
             width: 300
             implicitHeight: verLayout.height + textPadding * 2
 
             radius: borderRadius
             
-            color: palette.active.base
+            color: palette.active.window
             
             
             NumberAnimation on x {

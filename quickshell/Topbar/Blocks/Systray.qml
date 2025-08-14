@@ -11,7 +11,7 @@ import QtQuick.Layouts
 Rectangle {
     property var iconPadding: 5
     
-    color: palette.active.base
+    color: palette.active.window
 
     implicitWidth: systrayLayout.width
     Layout.fillHeight: true

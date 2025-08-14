@@ -46,7 +46,7 @@ RowLayout {
         
             required property MprisPlayer modelData
 
-            color: palette.active.base
+            color: palette.active.window
 
             Layout.preferredWidth: mprisLayout.width + (textPadding * 2)
             Layout.fillHeight: true
@@ -132,7 +132,7 @@ RowLayout {
                     id: cavaBg
                     anchors.fill: parent
                     
-                    color: palette.active.base
+                    color: palette.active.window
 
                     radius: borderRadius
                     opacity: 0.7

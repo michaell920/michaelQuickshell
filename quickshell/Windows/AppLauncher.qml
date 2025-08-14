@@ -127,7 +127,7 @@ Scope {
 
                 anchors.fill: parent
                 
-                color: palette.active.base
+                color: palette.active.window
                 
                 radius: borderRadius
                 
@@ -157,7 +157,7 @@ Scope {
                             topLeftRadius: borderRadius
                             topRightRadius: borderRadius
                             
-                            color: palette.active.base
+                            color: palette.active.window
                         }
                 
                         Component.onCompleted: {
@@ -215,7 +215,7 @@ Scope {
     
                         model: entriesModel
                         
-                        highlight: Rectangle { color: palette.active.accent }
+                        highlight: Rectangle { color: palette.active.highlight }
                         highlightMoveDuration: 0
                         
 
