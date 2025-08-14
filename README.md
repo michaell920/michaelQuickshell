@@ -4,7 +4,7 @@ I will try to make my code more readable for human beings, feel free to take my 
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
 ## What it aims to do
-Waybar on steroids, theme agnostic (color is based on your qt theme)  
+An experience similar to a Desktop Environment
 
 ## Installation
 Copy the "quickshell" folder to your ~/.config folder  
@@ -36,7 +36,8 @@ Quickshell version: 0.2.0
 - Clock (of course)  
 - Wifi Indicator (not finished yet)  
 - CPU Temperature  
-- Power mode indicator (click to change modes)  
+- Power mode indicator (click to change modes)
+- Volume Mixer (click the volume block to toggle on/off)  
 - External desktop monitor bar (scroll to control brightness)  
 - Systemtray
 - Rofi style app launcher with mouse interactions
