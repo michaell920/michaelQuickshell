@@ -3,7 +3,7 @@ Not meant to be used by anyone but myself, I don't read commits
 I will try to make my code more readable for human beings, feel free to take my stuffs for your configuration  
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
-## Design philosophy
+## What it aims to do
 Waybar on steroids, theme agnostic (color is based on your qt theme)  
 
 ## Installation
@@ -12,7 +12,7 @@ Copy the "quickshell" folder to your ~/.config folder
 ## System used for making this terrible Quickshell config:
 Distro: Arch Linux  
 Wayland compositor: Wayfire  
-Quickshell version: I don't know I got the master branch one  
+Quickshell version: 0.2.0  
 
 ## You need these dependencies in order to work property:
 ### In Arch's repository
@@ -24,7 +24,7 @@ Quickshell version: I don't know I got the master branch one
 - python
 - gtk-launch (Opening desktop entries)
 - lm-sensors (Getting CPU temperature)
-- upower (setting power modes)  
+- power-profiles-daemon (setting power modes)  
 
 ### In AUR
 - wayfire (Of course)  
@@ -41,7 +41,7 @@ Quickshell version: I don't know I got the master branch one
 - Systemtray
 - Rofi style app launcher with mouse interactions
 - Notification popups Dunst style
-- Notification centre where you can drag to remove notifications or click to show notifications in full details  
+- Notification centre where you can drag to remove notifications or click to show notifications in full
 
 ## Known issues
 MPRIS progress bar not updating accurately sometimes  
