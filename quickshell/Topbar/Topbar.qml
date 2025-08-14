@@ -21,6 +21,7 @@ Scope {
             color: "Transparent"
             implicitHeight: 30
 
+
             anchors {
                 top: true
                 left: true

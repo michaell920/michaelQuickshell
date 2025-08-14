@@ -1,5 +1,6 @@
 
 import Quickshell
+import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Services.Pipewire
 
@@ -74,6 +75,16 @@ Rectangle {
 
             }
         }
+        
+        onClicked: {
+            toggleMixer.running = true
+        }
+    }
+    
+    Process {
+        id: toggleMixer
+        running: false
+        command: ["qs", "ipc", "call", "mixerLoader", "toggleMixer"]
     }
     
     Timer {

@@ -95,8 +95,6 @@ RowLayout {
                     color: palette.active.text
         
                     text: modelData.trackTitle
-                    style: Text.Raised
-                    styleColor: palette.active.shadow
 
                     maximumLineCount: 1
                     elide: Text.ElideRight

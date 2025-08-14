@@ -15,6 +15,8 @@ import Qt5Compat.GraphicalEffects
 Rectangle {
     id: root
     
+    z: 1
+    
     property var gap: 10
     property var modeStr: {
         "Performance": "performance",
@@ -65,7 +67,7 @@ Rectangle {
     PopupWindow {
         id: menu
 
-        implicitWidth: root.width
+        implicitWidth: powerMenu.width
         implicitHeight: powerMenu.contentHeight
         
         color: "Transparent"
@@ -84,24 +86,38 @@ Rectangle {
             
         Menu {
             id: powerMenu
-            
+
+            width: {
+                var result = 0
+                var padding = 0
+                for (var i = 0; i < count; i++) {
+                    var item = contentData[i]
+                    result = Math.max(item.contentItem.implicitWidth + item.padding, result)
+                    padding = Math.max(item.padding, padding)
+                    console.log(item.contentItem.text + " : " + item.contentItem.implicitWidth)
+                }
+                return result + padding * 2
+            }
+
             MenuItem { text: "PowerSaver" }
             MenuItem { text: "Balanced" }
-            
-            Component.onCompleted: {
-                if (PowerProfiles.hasPerformanceProfile)
-                    this.addItem(performance)
+            MenuItem { 
+                id: performance
+                text: "Performance" 
             }
             
+            onAboutToShow: {
+                if (!PowerProfiles.hasPerformanceProfile)
+                    this.removeItem(performance)
+                    
+                console.log(powerMenu.width)
+            }
+
             onAboutToHide: {
                 PowerProfiles.profile = PowerProfile[this.contentData[currentIndex].text]
             }
         }
 
-        MenuItem { 
-            id: performance
-            text: "Performance"
-        }
     }
     
     MouseArea {
