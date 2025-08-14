@@ -21,7 +21,7 @@ Quickshell version: 0.2.0
 - playerctl  
 - qt6-5compat (For graphical effects)  
 - ddcutil (Setting screen brightness)  
-- python
+- python (python wayfire scripts and etc.)
 - gtk-launch (Opening desktop entries)
 - lm-sensors (Getting CPU temperature)
 - power-profiles-daemon (setting power modes)  
