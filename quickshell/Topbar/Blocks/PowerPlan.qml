@@ -91,10 +91,9 @@ Rectangle {
                 var result = 0
                 var padding = 0
                 for (var i = 0; i < count; i++) {
-                    var item = contentData[i]
+                    var item = itemAt(i)
                     result = Math.max(item.contentItem.implicitWidth + item.padding, result)
                     padding = Math.max(item.padding, padding)
-                    console.log(item.contentItem.text + " : " + item.contentItem.implicitWidth)
                 }
                 return result + padding * 2
             }
@@ -109,8 +108,6 @@ Rectangle {
             onAboutToShow: {
                 if (!PowerProfiles.hasPerformanceProfile)
                     this.removeItem(performance)
-                    
-                console.log(powerMenu.width)
             }
 
             onAboutToHide: {
