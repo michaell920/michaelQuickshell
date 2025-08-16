@@ -34,7 +34,7 @@ Rectangle {
         
         IconImage {
             source: {
-                const vol = Math.round(Pipewire.defaultAudioSink.audio.volume * 100)
+                const vol = Math.round(Pipewire.defaultAudioSink?.audio.volume * 100)
 
                 if (vol === 0) {
                     return Quickshell.iconPath("audio-volume-off", true)

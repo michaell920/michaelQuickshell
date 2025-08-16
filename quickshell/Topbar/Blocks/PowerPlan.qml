@@ -63,12 +63,24 @@ Rectangle {
             }
         }
     }
+
+    MouseArea {
+        anchors.fill: parent
+        
+        onClicked: (event) => {
+            menu.visible = !menu.visible
+            powerMenu.popup()
+        }
+    }
     
+
     PopupWindow {
         id: menu
 
         implicitWidth: powerMenu.width
-        implicitHeight: powerMenu.contentHeight
+        implicitHeight: powerMenu.contentHeight + textPadding
+        //implicitWidth: 300
+        //implicitHeight: 300
         
         color: "Transparent"
   
@@ -97,32 +109,49 @@ Rectangle {
                 }
                 return result + padding * 2
             }
-
-            MenuItem { text: "PowerSaver" }
-            MenuItem { text: "Balanced" }
-            MenuItem { 
-                id: performance
-                text: "Performance" 
+            
+            background: Rectangle {
+                color: palette.active.window
+                radius: borderRadius
             }
             
-            onAboutToShow: {
-                if (!PowerProfiles.hasPerformanceProfile)
-                    this.removeItem(performance)
-            }
+            Instantiator {
+                //model: ["PowerSaver", "Balanced", "Performance"].filter((entry) => {
+                //    if (entry.modelData === "Performance") {
+                //        return PowerProfiles.hasPerformanceProfile
+                //    }
+                //    return true
+                //})
+                
+                model: [PowerProfile.Performance, PowerProfile.PowerSaver, PowerProfile.Balanced].filter((entry) => {
+                    if (entry.modelData === PowerProfile.Performance) {
+                        return PowerProfiles.hasPerformanceProfile
+                    }
+                    return true
+                })
+
+                MenuItem {
+                    id: holder
+
+                    required property var modelData
+
+                    text: PowerProfile.toString(modelData)
+                    
+                    background: Rectangle {
+                        radius: borderRadius
+
+                        color: holder.hovered ? palette.active.highlight : palette.active.window
+                    }
+                }
+
+                onObjectAdded: (index, object) => powerMenu.insertItem(index, object)
+                onObjectRemoved: (index, object) => powerMenu.removeItem(object)
+            } 
 
             onAboutToHide: {
-                PowerProfiles.profile = PowerProfile[this.contentData[currentIndex].text]
+                PowerProfiles.profile = itemAt(currentIndex).modelData
             }
         }
 
-    }
-    
-    MouseArea {
-        anchors.fill: parent
-        
-        onClicked: (event) => {
-            menu.visible = !menu.visible
-            powerMenu.popup()
-        }
     }
 }
