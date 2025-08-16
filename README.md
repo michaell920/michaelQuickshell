@@ -9,6 +9,10 @@ An experience similar to a Desktop Environment
 ## Installation
 Copy the "quickshell" folder to your ~/.config folder  
 
+## After Installation
+You need to configure in each modules block file in order to make it working  
+Yeah, it takes time...  
+
 ## System used for making this terrible Quickshell config:
 Distro: Arch Linux  
 Wayland compositor: Wayfire  
