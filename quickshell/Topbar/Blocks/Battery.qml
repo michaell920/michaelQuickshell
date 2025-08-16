@@ -9,14 +9,13 @@ import QtQuick.Layouts
 
 RowLayout {
     id: root
-    
-    visible: UPower.onBattery
 
     Repeater {
-        model: UPower.devices.values
+        model: UPower.devices
         
         Rectangle {
             required property UPowerDevice modelData
+            property var isLaptopBattery: modelData.isLaptopBattery
         
             color: palette.active.window
         
@@ -24,6 +23,8 @@ RowLayout {
             Layout.fillHeight: true
             
             radius: borderRadius
+
+            visible: isLaptopBattery
             
             RowLayout {
                 id: layout
