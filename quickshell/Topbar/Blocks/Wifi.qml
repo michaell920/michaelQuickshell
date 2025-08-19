@@ -8,8 +8,7 @@ import QtQuick.Layouts
 
 
 Rectangle {
-    property string wifiInterface: "wlp4s0"
-    property int pollingRate: 10000
+    property int pollingRate: 1000
 
     property bool connected: false
 
@@ -51,8 +50,8 @@ Rectangle {
         Process {
             id: getWifiSignal
 
-            running: false
-            command: ["nmcli", "-f", "SIGNAL,ACTIVE", "dev", "wifi", "list"]
+            running: true
+            command: ["nmcli", "-f", "SIGNAL,ACTIVE,SSID,DEVICE", "dev", "wifi", "list"]
 
             stdout: SplitParser {
                 onRead: (data) => {
@@ -61,32 +60,14 @@ Rectangle {
                     if (textStr[1] == "yes") {
                         var roundUp = Math.floor(textStr[0] / 20) * 20
                         wifiIcon.source = Quickshell.iconPath("network-wireless-" + roundUp)
+                        wifiText.text = textStr[2]
                     }
                 }
             }
         }
         
         Process {
-            id: getWifiName
-
-            running: false
-            command: ["nmcli", "-f", "NAME,DEVICE", "connection", "show", "--active"]
-            
-            stdout: SplitParser {
-                onRead: (data) => {
-                    const textStr = data.split(/\s{1,}/)
-                    
-                    if (textStr[1] == wifiInterface) {
-                        wifiText.text = textStr[0]
-                    }
-
-                    getWifiSignal.running = true
-
-                }
-            }
-        }
-        
-        Process {
+            id: checkIfConnected
             running: true
             command: ["nmcli", "device", "monitor"]
             
@@ -97,7 +78,7 @@ Rectangle {
                     if (textStr[0] == wifiInterface) {
                         if (textStr[1] == "connected") {
                             connected = true
-                            getWifiName.running = true
+                            getWifiSignal.running = true
                         } else if (textStr[1] == "disconnected") {
                             wifiIcon.source = Quickshell.iconPath("network-wireless-disconnected")
                             wifiText.text = textStr[1]
@@ -113,7 +94,7 @@ Rectangle {
             repeat: true
 
             onTriggered: {
-                getWifiSignal.running = true
+                checkIfConnected.running = true
             }
         }
         
