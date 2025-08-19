@@ -10,8 +10,6 @@ import QtQuick.Layouts
 Rectangle {
     property int pollingRate: 1000
 
-    property bool connected: false
-
 
     color: palette.active.window
 
@@ -41,10 +39,6 @@ Rectangle {
             text: ""
             
             color: palette.active.text
-            
-            Component.onCompleted: {
-                getWifiName.running = true
-            }
         }
         
         Process {
@@ -75,26 +69,23 @@ Rectangle {
                 onRead: (data) => {
                     const textStr = data.split(": ")
                     
-                    if (textStr[0] == wifiInterface) {
-                        if (textStr[1] == "connected") {
-                            connected = true
-                            getWifiSignal.running = true
-                        } else if (textStr[1] == "disconnected") {
-                            wifiIcon.source = Quickshell.iconPath("network-wireless-disconnected")
-                            wifiText.text = textStr[1]
-                        }
+                    if (textStr[1] === "connected") {
+                        getWifiSignal.running = true
+                    } else if (textStr[1] === "disconnected") {
+                        wifiIcon.source = Quickshell.iconPath("network-wireless-disconnected")
+                        wifiText.text = textStr[1]
                     }
                 }
             }
         }
 
         Timer {
-            running: connected
+            running: true
             interval: pollingRate
             repeat: true
 
             onTriggered: {
-                checkIfConnected.running = true
+                getWifiSignal.running = true
             }
         }
         
