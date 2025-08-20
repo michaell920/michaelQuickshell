@@ -1,6 +1,6 @@
 # michaelQuickshell
 This is a personal project  
-I will try to make my code more readable for human beings, feel free to take my stuffs for your configuration  
+Feel free to take my configurations for your own spin
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
 ## What it aims to do
