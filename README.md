@@ -4,7 +4,7 @@ I will try to make my code more readable for human beings, feel free to take my 
 I barely commented the codes so sorry for people who went through the pain to comprehend  
 
 ## What it aims to do
-An experience similar to a Desktop Environment
+An experience similar to a Desktop Environment, both available in Desktop and Laptop
 
 ## Installation
 Copy the "quickshell" folder to your ~/.config folder  
@@ -14,7 +14,7 @@ You need to configure in each modules block file in order to make it working
 Yeah, it takes time...  
 
 ## System used for making this terrible Quickshell config:
-Distro: Arch Linux  
+Distro: Arch Linux, NixOS  
 Wayland compositor: Wayfire  
 Quickshell version: 0.2.0  
 
