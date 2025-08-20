@@ -28,7 +28,8 @@ Quickshell version: 0.2.0
 - python (python wayfire scripts and etc.)
 - gtk-launch (Opening desktop entries)
 - lm-sensors (Getting CPU temperature)
-- power-profiles-daemon (setting power modes)  
+- power-profiles-daemon (setting power modes)
+- gtk3 (for the gtk-launch program)
 
 ### In AUR
 - wayfire (Of course)  
