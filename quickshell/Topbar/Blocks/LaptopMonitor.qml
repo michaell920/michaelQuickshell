@@ -8,6 +8,7 @@ import QtQuick.Layouts
 
 Rectangle {
     property var wheelThresholdTime: 200
+    property var interval: 1000
     
     // I had to set variable on run time cause binding does not work
     // Hope someone come up with a smarter idea
@@ -110,5 +111,16 @@ Rectangle {
         id: stopRegister
         running: false
         interval: wheelThresholdTime
+    }
+    
+    Timer {
+        id: loop
+        running: true
+        repeat: true
+        interval: interval
+        
+        onTriggered: {
+            getBrightness.running = true
+        }
     }
 }
