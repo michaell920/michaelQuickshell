@@ -30,9 +30,9 @@ Scope {
 
             required property var notif
 
-            property string icon: notif.appIcon
-            property string summary: notif.summary
-            property string body: notif.body
+            required property string icon
+            required property string summary
+            required property string body
 
             
             // Status
@@ -127,7 +127,7 @@ Scope {
                     Layout.topMargin: textPadding
                                 
                     implicitSize: 30
-                    source: Quickshell.iconPath(icon, true) || icon
+                    source: Quickshell.iconPath(notif.appIcon, true) || icon
                                 
                     visible: source != ""
                 }
@@ -145,7 +145,7 @@ Scope {
 
                             Layout.fillWidth: true
 
-                            text: summary
+                            text: notif.summary || summary
                             color: palette.active.text
                             wrapMode: Text.WordWrap
                                         
@@ -196,7 +196,7 @@ Scope {
 
                         Layout.fillWidth: true
 
-                        text: body
+                        text: notif.body || body
                         color: palette.active.text
                         
                         maximumLineCount: 1
@@ -265,13 +265,6 @@ Scope {
         
         exclusionMode: ExclusionMode.Normal
         
-
-        NumberAnimation on margins.right {
-            from: -window.implicitWidth
-            to: windowGap
-            easing.type: Easing.InOutQuad
-            duration: animateTime
-        }
 
         Rectangle {
             anchors.fill: parent   

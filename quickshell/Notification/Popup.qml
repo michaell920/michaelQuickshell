@@ -32,9 +32,9 @@ Scope {
             required property var index
             required property var notif
 
-            property var icon: notif.appIcon
-            property var summary: notif.summary
-            property var body: notif.body
+            required property var icon
+            required property var summary
+            required property var body
             
             
             width: 300
@@ -71,7 +71,7 @@ Scope {
                     Layout.alignment: Text.AlignTop
                     
                     implicitSize: 30
-                    source: Quickshell.iconPath(icon, true) || icon
+                    source: Quickshell.iconPath(notif.appIcon, true) || icon
                     
                     visible: source != ""
                 }
@@ -83,7 +83,7 @@ Scope {
                     
 
                     Text {
-                        text: summary
+                        text: notif.summary || summary
                         color: palette.active.text
                         
                         Layout.fillHeight: true
@@ -92,7 +92,7 @@ Scope {
                     }
                     
                     Text {
-                        text: body
+                        text: notif.body || body
                         color: palette.active.text
 
                         Layout.fillWidth: true

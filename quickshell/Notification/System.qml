@@ -18,7 +18,7 @@ Scope {
     
     LazyLoader {
         id: panelLoader
-        active: false
+        active: notifPanelOn
 
         Panel {}
     }
@@ -44,19 +44,13 @@ Scope {
             // For example: blueman battery notifications
             
             notificationsList.append({
-                "notif": notification
+                "notif": notification,
+                "icon": notification.appIcon,
+                "summary": notification.summary,
+                "body": notification.body
             })
             
             notifCount += 1
-        }
-    }
-    
-    IpcHandler {
-        target: "panelLoader"
-       
-        function togglePanel() {
-            panelLoader.active = !panelLoader.active
-            popupVisible = !panelLoader.active
         }
     }
 }
