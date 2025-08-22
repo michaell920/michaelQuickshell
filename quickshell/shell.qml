@@ -14,9 +14,12 @@ ShellRoot {
     property var textPadding: 5
     
     property var animateTime: 100
+    property var cavaAnimateTime: 100
 
     // States
     property int notifCount: 0
+    
+    property bool notifPanelOn: false
 
     
     Topbar {}
