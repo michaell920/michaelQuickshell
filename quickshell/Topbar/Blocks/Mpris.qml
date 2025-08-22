@@ -202,7 +202,7 @@ RowLayout {
 
                         Behavior on Layout.topMargin {
                             NumberAnimation {
-                                duration: 100
+                                duration: cavaAnimateTime
                                 
                                 onRunningChanged: {
                                     var levels = 1 / (cavaColors.length - 1)
