@@ -28,16 +28,8 @@ Rectangle {
             anchors.fill: parent
             
             onClicked: {
-                togglePanel.running = true
+                notifPanelOn = !notifPanelOn
             }
         }
     }
-    
-    Process {
-        id: togglePanel
-        
-        running: false
-        command: ["qs", "ipc", "call", "panelLoader", "togglePanel"]
-    }
-
 }
