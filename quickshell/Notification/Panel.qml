@@ -279,7 +279,7 @@ Scope {
                 Layout.alignment: Text.AlignTop
 
                 Layout.fillWidth: true
-                implicitHeight: titleLayout.height
+                implicitHeight: titleLayout.height + textPadding
                 
                 color: palette.active.window
                 
@@ -295,6 +295,7 @@ Scope {
                     }
 
                     Text {
+                        Layout.topMargin: textPadding
                         Layout.leftMargin: textPadding
 
                         Layout.fillWidth: true
@@ -314,6 +315,7 @@ Scope {
                     Rectangle {
                         id: clearBg
 
+                        Layout.alignment: Text.AlignVCenter
                         Layout.rightMargin: textPadding
                         
                         implicitWidth: clearIcon.width
