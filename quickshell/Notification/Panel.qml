@@ -52,6 +52,8 @@ Scope {
             radius: borderRadius
 
             color: palette.active.light
+            
+            visible: notif != null
                         
             
             Behavior on x {
