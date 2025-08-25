@@ -45,7 +45,7 @@ Scope {
                 summaryText.maximumLineCount = expanded ? Number.MAX_SAFE_INTEGER : 1
                 bodyText.maximumLineCount = expanded ? Number.MAX_SAFE_INTEGER : 1
             }
-                        
+            
             implicitWidth: window.width - textPadding * 2
             implicitHeight: verLayout.height + textPadding * 2
                         
@@ -268,24 +268,35 @@ Scope {
         exclusionMode: ExclusionMode.Normal
         
 
-        Rectangle {
-            anchors.fill: parent   
-            
-            color: palette.active.window
-            radius: borderRadius
-            
+        ColumnLayout {
+            anchors.fill: parent
 
-            ColumnLayout {
-                anchors.fill: parent
+            spacing: windowGap
+
+            Rectangle {
+                id: titleBg
                 
-                anchors.topMargin: textPadding
-                anchors.leftMargin: textPadding
+                Layout.alignment: Text.AlignTop
+
+                Layout.fillWidth: true
+                implicitHeight: titleLayout.height
+                
+                color: palette.active.window
+                
+                radius: borderRadius
+
                 
                 RowLayout {
-                    Layout.fillWidth: true
-                    Layout.alignment: Text.AlignTop
+                    id: titleLayout
+
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
 
                     Text {
+                        Layout.leftMargin: textPadding
+
                         Layout.fillWidth: true
 
                         text: "Notifications"
@@ -350,18 +361,37 @@ Scope {
                         }
                     }
                 }
+            }
+            
+            Rectangle {
+                Layout.alignment: Text.AlignTop
                 
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                
+                color: palette.active.window
+
+                radius: borderRadius
+
+
                 ListView {
                     id: view
                     
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    
+                    anchors {
+                        fill: parent
+                        topMargin: textPadding
+                        leftMargin: textPadding
+                    }
+
                     spacing: textPadding
                     
                     model: notifications
+                    
+                    clip: true
                 }
             }
+
+
         }
         
     }

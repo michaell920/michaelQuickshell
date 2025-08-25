@@ -12,7 +12,6 @@ import QtQml.Models
 Scope {
     id: notificationSystem
     
-    property bool popupVisible: true
 
     Popup {} 
     

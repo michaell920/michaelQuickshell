@@ -154,7 +154,7 @@ Scope {
             
             color: "Transparent"
             
-            visible: popupVisible
+            visible: !notifPanelOn
             
             ColumnLayout {
                 id: layout
