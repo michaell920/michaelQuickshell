@@ -21,91 +21,8 @@ Scope {
     property int entryHeight: 30
     property int searchBarHeight: 30
     
-
-    ListModel {
-        id: entriesList
-    }
-
-    DelegateModel {
-        id: entriesModel
-        model: entriesList
-        
-        property var visibleArr: []
-
-        function filter(text) {
-            visibleArr = []
-
-            const regex = new RegExp(text.toLowerCase())
-
-            for (var i = 0; i < items.count; i++) {
-                var item = items.get(i)
-                var entry = item.model
-                
-                var entryName = entry.name.toLowerCase()
-                var entryTitle = entry.title.toLowerCase()
-                
-                // If the item is in the "results" group
-                if (item.inResults) {
-                    // If does not match the title nor the name
-                    if (!entryTitle.match(regex) && !entryName.match(regex)) {
-                        item.inResults = false
-                    } else {
-                        visibleArr.push(item)
-                    }
-                } else {
-                    // If the item is not in the "results" group and matches the regex
-                    if (entryTitle.match(regex) || entryName.match(regex)) {
-                        // Add it to the visibleArr
-                        visibleArr.push(item)
-                    }
-                }
-            }
-
-            update()
-        }
-        
-        function fill() {
-            visibleArr = []
-
-            // Remove all result entries
-            resultEntries.removeGroups(0, resultEntries.count)
-                
-            // Add all available entries to the visibleArr
-            for (var i = 0; i < items.count - 1; i++) {
-                visibleArr.push(items.get(i))
-            }
-
-            update()
-        }
-
-        function update() {
-            // Sort
-            visibleArr.sort(function(a, b) {
-                return a.model.title.localeCompare(b.model.title)
-            })
-            
-            // Sort again in the result group
-            for (var i = 0; i < visibleArr.length; i++) {
-                var item = visibleArr[i]
-
-                // Make things in visibleArr present in the "results" group
-                item.inResults = true
-
-                if (item.resultsIndex !== i) {
-                    resultEntries.move(item.resultsIndex, i, 1)
-                }
-            }
-        }
-        
-        groups: DelegateModelGroup {
-            id: resultEntries
-            name: "results"
-            includeByDefault: false
-        }
-        
-        filterOnGroup: "results"
-        
-    }
+    property var appEntries: []
+    
 
     LazyLoader {
         id: launcherLoader
@@ -114,6 +31,7 @@ Scope {
         component: PanelWindow {
             id: root
             
+
             implicitWidth: 300
             implicitHeight: 300
             
@@ -194,15 +112,6 @@ Scope {
                                 }
                             }
                         }
-                        
-                        Keys.onReleased: event => {
-                            if (searchBar.text.trim().length != 0) {
-                                entriesModel.filter(searchBar.text.trim())
-                            } else {
-                                entriesModel.fill()
-                            }
-
-                        }
                     }
 
                     ListView {
@@ -213,7 +122,17 @@ Scope {
                         Layout.fillWidth: true
                         Layout.fillHeight: true
     
-                        model: entriesModel
+                        model: ScriptModel {
+                            values: [...appEntries].sort((a, b) => {
+                                return a.title.localeCompare(b.title)
+                            }).filter((a) => {
+                                const regex = new RegExp(searchBar.text.toLowerCase())
+                                const entryTitle = a.title.toLowerCase()
+                                const entryName = a.name.toLowerCase()
+
+                                return entryTitle.match(regex) || entryName.match(regex)
+                            })
+                        }
                         
                         highlight: Rectangle { color: palette.active.highlight }
                         highlightMoveDuration: 0
@@ -222,10 +141,12 @@ Scope {
                         delegate: Rectangle {
                             id: entryHolder
 
-                            required property string name
-                            required property string title
-                            required property string icon
-                            required property string path
+                            required property var modelData
+                            required property int index
+                            property string name: modelData.name
+                            property string title: modelData.title
+                            property string icon: modelData.icon
+                            property string path: modelData.path
 
 
                             anchors.left: view.contentItem.left
@@ -303,7 +224,8 @@ Scope {
         command: [Quickshell.shellDir + "/scripts/findAppId"]
         
         onStarted: {
-            entriesList.clear()
+            appEntries = []
+            //entriesList.clear()
         }
 
         stdout: SplitParser {
@@ -311,7 +233,7 @@ Scope {
                 var entry = data.split(",") 
 
                 if (entry[3] !== "true") {
-                    entriesList.append({ 
+                    appEntries.push({ 
                         "name": entry[0], 
                         "title": entry[1],
                         "icon": entry[2].split(" ")[0],
@@ -322,7 +244,8 @@ Scope {
         }
 
         onExited: {
-            entriesModel.fill()
+            launcherLoader.active = true
+            //entriesModel.fill()
         }
     }
 
@@ -331,11 +254,11 @@ Scope {
         target: "launcherLoader"
 
         function toggleLoader() { 
-            launcherLoader.active = !launcherLoader.active
-
-            if (launcherLoader.active) {
+            if (!launcherLoader.active) {
                 getDesktopEntries.running = false
                 getDesktopEntries.running = true
+            } else {
+                launcherLoader.active = false
             }
         }
     }
