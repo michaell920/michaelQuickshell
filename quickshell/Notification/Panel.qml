@@ -34,7 +34,7 @@ Scope {
             required property string summary
             required property string body
 
-            property var expireTimeout: Math.min(notif.expireTimeout, 1)
+            property var expireTimeout: notif.expireTimeout
             
             // Status
             property bool expanded: false
