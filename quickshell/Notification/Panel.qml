@@ -238,7 +238,7 @@ Scope {
                             interval: animateTime
                             
                             onTriggered: {
-                                notif?.dismiss()
+                                modelData?.dismiss()
                                 notifCount -= 1
                             }
                         }
