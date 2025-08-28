@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 # Ripped from https://github.com/karlstav/cava/issues/123#issuecomment-307891020
 import os
