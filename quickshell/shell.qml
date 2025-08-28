@@ -3,6 +3,7 @@
 import Quickshell
 
 import "Topbar"
+import "Lockscreen"
 import "Windows" as Windows
 import "Notification" as Notification
 
@@ -28,4 +29,6 @@ ShellRoot {
     Windows.VolumeMixer {}
 
     Notification.System {}
+    
+    Lockscreen {}
 }
