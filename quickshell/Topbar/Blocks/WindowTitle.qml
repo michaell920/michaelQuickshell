@@ -51,6 +51,9 @@ Rectangle {
 
         Process {
             running: true 
+            environment: ({
+                PATH: Quickshell.shellDir + "/venv/bin/"
+            })
             command: [ Quickshell.shellDir + "/scripts/windowMonitor.py" ]
             stdout: SplitParser {
                 onRead: data => {
