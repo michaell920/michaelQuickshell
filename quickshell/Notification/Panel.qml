@@ -113,11 +113,12 @@ Scope {
                             hoverEnabled: true
                             
                             onClicked: {
-                                for (var i = 0; i < notificationsList.count; i++) {
-                                    var entry = notificationsList.get(i).notif
-                                    entry?.dismiss()
+                                const notifs = notifCount
+                                
+                                for (var i = 0; i < notifs; i++) {
+                                   notifServer.trackedNotifications.values[0].dismiss()
                                 }
-                                notificationsList.clear()
+
                                 notifCount = 0
                             }
                                 
