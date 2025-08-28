@@ -94,6 +94,7 @@ Scope {
                         animationTimer.running = true
                     } else {
                         holder.x = 0
+                        delIndicator.opacity = 0
                     }
                 }
             }
