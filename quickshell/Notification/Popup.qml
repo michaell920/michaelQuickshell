@@ -17,7 +17,7 @@ Scope {
     DelegateModel {
         id: popupNotifications 
 
-        model: notificationsList
+        model: notifServer.trackedNotifications
         
         groups: DelegateModelGroup {
             id: popupEntries
@@ -30,11 +30,11 @@ Scope {
         delegate: Rectangle {
             id: popup
             required property var index
-            required property var notif
+            required property var modelData
 
-            required property var icon
-            required property var summary
-            required property var body
+            property var icon: modelData.appIcon
+            property var summary: modelData.summary
+            property var body: modelData.body
             
             
             width: 300
@@ -71,7 +71,7 @@ Scope {
                     Layout.alignment: Text.AlignTop
                     
                     implicitSize: 30
-                    source: Quickshell.iconPath(notif.appIcon, true) || icon
+                    source: Quickshell.iconPath(icon, true)
                     
                     visible: source != ""
                 }
@@ -83,7 +83,7 @@ Scope {
                     
 
                     Text {
-                        text: notif.summary || summary
+                        text: summary
                         color: palette.active.text
                         
                         Layout.fillHeight: true
@@ -92,7 +92,7 @@ Scope {
                     }
                     
                     Text {
-                        text: notif.body || body
+                        text: body
                         color: palette.active.text
 
                         Layout.fillWidth: true
@@ -108,9 +108,8 @@ Scope {
                 anchors.fill: parent
                 
                 onClicked: {
-                    notif?.dismiss()
+                    modelData?.dismiss()
                     notifCount -= 1
-                    notificationsList.remove(index, 1)
                 }
             }
             

@@ -12,7 +12,6 @@ import QtQml.Models
 Scope {
     id: notificationSystem
     
-
     Popup {} 
     
     LazyLoader {
@@ -26,11 +25,9 @@ Scope {
         id: notificationsList
     }
     
-    function updateCount() {
-        notifCount = notificationsList.count
-    }
-    
     NotificationServer {
+        id: notifServer
+
         actionsSupported: true
         actionIconsSupported: true
         imageSupported: true
@@ -41,13 +38,6 @@ Scope {
             // I don't append the notification instead because the appended value
             // couldn't be updated, so a reference is appended instead
             // For example: blueman battery notifications
-            
-            notificationsList.append({
-                "notif": notification,
-                "icon": notification.appIcon,
-                "summary": notification.summary,
-                "body": notification.body
-            })
             
             notifCount += 1
         }
