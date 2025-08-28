@@ -34,6 +34,7 @@ Scope {
             required property string summary
             required property string body
 
+            property var expireTimeout: Math.min(notif.expireTimeout, 1)
             
             // Status
             property bool expanded: false
@@ -52,9 +53,6 @@ Scope {
             radius: borderRadius
 
             color: palette.active.light
-            
-            visible: notif != null
-                        
             
             Behavior on x {
                 NumberAnimation {
@@ -107,6 +105,17 @@ Scope {
                 
                 onTriggered: {
                     notif?.dismiss()
+                    notifCount -= 1
+                    notificationsList.remove(index, 1)
+                }
+            }
+            
+            Timer {
+                id: closeTimer
+                running: (expireTimeout > 0)
+                interval: expireTimeout * 1000
+                
+                onTriggered: {
                     notifCount -= 1
                     notificationsList.remove(index, 1)
                 }
