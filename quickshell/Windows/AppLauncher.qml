@@ -183,14 +183,7 @@ Scope {
                                 anchors.fill: parent
                                 
                                 onClicked: {
-                                    // Inefficient script, God save us please....
-                                    for (var i = 0; i < resultEntries.count - 1; i++) {
-                                        var entry = resultEntries.get(i)
-                                        if (entry.model.path === path) {
-                                            view.currentIndex = i
-                                            break
-                                        }
-                                    }
+                                    view.currentIndex = index
                                 }
                                 
                                 onDoubleClicked: {
