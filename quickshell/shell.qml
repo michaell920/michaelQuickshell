@@ -1,6 +1,7 @@
 //@ pragma UseQApplication
 
 import Quickshell
+import Quickshell.Services.Notifications
 
 import "Topbar"
 import "Lockscreen"
@@ -27,6 +28,18 @@ ShellRoot {
 
     Windows.AppLauncher {}
     Windows.VolumeMixer {}
+
+    NotificationServer {
+        id: notifServer
+
+        actionsSupported: true
+        actionIconsSupported: true
+        imageSupported: true
+        
+        onNotification: notification => {
+            notification.tracked = true
+        }
+    }
 
     Notification.System {}
     
