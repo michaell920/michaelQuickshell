@@ -109,7 +109,6 @@ Scope {
                 
                 onClicked: {
                     modelData?.dismiss()
-                    notifCount -= 1
                 }
             }
             
