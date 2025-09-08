@@ -8,6 +8,8 @@ import QtQuick.Layouts
 
 
 Rectangle {
+    property var notifCount: notifServer.trackedNotifications.values
+
     color: palette.active.window
     
     implicitWidth: icon.width + (textPadding * 2)
