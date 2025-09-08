@@ -8,6 +8,8 @@ Rectangle {
     property var clockFormat: "HH:mm"
     property var clockAltFormat: "yyyy-MM-dd"
     
+    property var format: clockFormat
+    
     property bool triggered: false
 
 
@@ -32,7 +34,7 @@ Rectangle {
 
         color: palette.active.text
 
-        text: Qt.formatDateTime(clock.date, clockFormat)
+        text: Qt.formatDateTime(clock.date, format)
         font.bold: true
     }
     
@@ -41,7 +43,7 @@ Rectangle {
 
         onClicked: {
             triggered = !triggered
-            clockText.text = Qt.formatDateTime(clock.date, triggered ? clockAltFormat : clockFormat)
+            format = triggered ? clockAltFormat : clockFormat
         }
     }
 }
