@@ -113,9 +113,9 @@ Scope {
                             hoverEnabled: true
                             
                             onClicked: {
-                                for (var i = 0; i < notifs; i++) {
-                                   notifServer.trackedNotifications.values[0].dismiss()
-                                }
+                                do {
+                                    notifServer.trackedNotifications.values[0]?.dismiss()
+                                } while (notifServer.trackedNotifications.values != 0)
                             }
                                 
                             onEntered: {
